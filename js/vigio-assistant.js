@@ -12,32 +12,34 @@
     /* ── BOUTON VIGIO FLOTTANT ── */
     #vigio-fab {
       position: fixed;
-      bottom: 24px;
+      bottom: 90px;
       right: 24px;
       width: 64px;
       height: 64px;
       border-radius: 50%;
       background: #0D1B2A;
-      border: 1.5px solid #C8943A;
+      border: 2px solid #C8943A;
       cursor: pointer;
       z-index: 9999;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 24px rgba(200,148,58,0.25), 0 0 0 0 rgba(200,148,58,0.3);
-      animation: vigioFabPulse 3s ease infinite;
+      box-shadow: 0 4px 20px rgba(200,148,58,0.3);
       transition: transform 0.2s ease;
       outline: none;
+      padding: 0;
     }
     #vigio-fab:hover { transform: scale(1.08); }
     #vigio-fab.hidden { display: none !important; }
 
-    @keyframes vigioFabPulse {
-      0%, 100% { box-shadow: 0 4px 24px rgba(200,148,58,0.2), 0 0 0 0 rgba(200,148,58,0.25); }
-      50% { box-shadow: 0 4px 32px rgba(200,148,58,0.35), 0 0 0 10px rgba(200,148,58,0); }
-    }
+    #vigio-fab:hover { transform: scale(1.08); }
 
-    #vigio-fab svg { width: 40px; height: 40px; }
+    @keyframes rp { 0%,100%{ opacity:.1; transform:scale(1); } 50%{ opacity:.25; transform:scale(1.03); } }
+    @keyframes cp { 0%,100%{ r:9px; } 50%{ r:12px; } }
+    @keyframes dp { 0%,100%{ r:3.5px; } 50%{ r:5px; } }
+    .ring-anim { animation: rp 3s ease-in-out infinite; transform-origin: 120px 120px; }
+    .core-anim { animation: cp 3s ease-in-out infinite; }
+    .dot-anim { animation: dp 3s ease-in-out infinite; }
 
     /* ── BOUTON URGENCE FIXE ── */
     #vigio-urgence-btn {
@@ -446,10 +448,14 @@
       <text x="32" y="36" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="11" letter-spacing="2" fill="#F4F1EC">VIGIO</text>
     </svg>`;
 
-  const LOGO_SVG_SMALL = `
-    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M32 8 A16 16 0 1 1 8 32" stroke="#C8943A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    </svg>`;
+  const LOGO_SVG_SMALL = `<svg width="56" height="56" viewBox="0 0 240 240">
+    <circle class="ring-anim" cx="120" cy="120" r="113" fill="none" stroke="#C8943A" stroke-width="3"/>
+    <path d="M 120 25 A 95 95 0 1 1 59 193" fill="none" stroke="#C8943A" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="120" cy="120" r="77" fill="#081320"/>
+    <circle cx="120" cy="120" r="42" fill="none" stroke="#C8943A" stroke-width="2" opacity="0.15"/>
+    <circle class="core-anim" cx="120" cy="120" r="9" fill="#C8943A" opacity="0.85"/>
+    <circle class="dot-anim" cx="120" cy="120" r="3.5" fill="#F4F1EC"/>
+  </svg>`;
 
   // ── PROTOCOLES URGENCE ──
   const URGENCES = [
