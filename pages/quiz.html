@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vigio — Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/quiz.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <span class="nav-logo">⛑</span>
+      <span class="nav-title">Vigio</span>
+    </div>
+    <div class="nav-links">
+      <a href="../index.html">Accueil</a>
+      <a href="guide.html">Guidage</a>
+      <a href="chat.html">Assistant IA</a>
+      <a href="formation.html">Formation</a>
+    </div>
+    <button class="btn-urgence" onclick="window.location.href='guide.html'">🚨 Urgence</button>
+  </nav>
+
+  <div class="page-container">
+
+    <!-- MENU QUIZ -->
+    <div id="view-menu">
+      <div class="page-header">
+        <a href="../index.html" class="back-btn">← Accueil</a>
+        <h1 class="page-title">Quiz</h1>
+        <p class="page-subtitle">Testez vos connaissances en premiers secours. Choisissez un thème ou lancez un quiz aléatoire.</p>
+      </div>
+
+      <!-- SCORE GLOBAL -->
+      <div class="score-global card" id="score-global">
+        <div class="score-global-title">📊 Votre progression</div>
+        <div class="score-bars" id="score-bars"></div>
+      </div>
+
+      <!-- QUIZ THEMES -->
+      <div class="quiz-themes" id="quiz-themes">
+        <!-- généré par JS -->
+      </div>
+
+      <button class="btn-random-quiz btn-primary" onclick="startRandomQuiz()">
+        🎲 Quiz aléatoire — 10 questions
+      </button>
+    </div>
+
+    <!-- QUIZ ACTIF -->
+    <div id="view-quiz" style="display:none;">
+      <div class="quiz-header">
+        <button class="back-btn" onclick="stopQuiz()">← Quitter</button>
+        <div class="quiz-meta">
+          <div class="quiz-theme-name" id="quiz-theme-name"></div>
+          <div class="quiz-progress-text">
+            Question <span id="q-current">1</span> / <span id="q-total">10</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+
+      <div class="question-card" id="question-card">
+        <div class="question-num" id="question-num">Question 1</div>
+        <h2 class="question-text" id="question-text">-</h2>
+        <div class="answers-grid" id="answers-grid">
+          <!-- généré par JS -->
+        </div>
+      </div>
+
+      <div class="question-feedback" id="question-feedback" style="display:none;">
+        <div class="feedback-icon" id="feedback-icon"></div>
+        <div class="feedback-text" id="feedback-text"></div>
+        <div class="feedback-expl" id="feedback-expl"></div>
+        <button class="btn-primary" id="btn-next" onclick="nextQuestion()">Question suivante →</button>
+      </div>
+    </div>
+
+    <!-- RÉSULTATS -->
+    <div id="view-results" style="display:none;">
+      <div class="results-card">
+        <div class="results-icon" id="results-icon"></div>
+        <h2 class="results-title" id="results-title"></h2>
+        <div class="results-score" id="results-score"></div>
+        <div class="results-sub" id="results-sub"></div>
+        <div class="results-details" id="results-details"></div>
+        <div class="results-actions">
+          <button class="btn-primary" onclick="restartQuiz()">🔄 Recommencer</button>
+          <button class="btn-secondary" onclick="stopQuiz()">← Choisir un thème</button>
+          <a href="formation.html" class="btn-secondary">📚 Réviser</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-disclaimer">
+      Ces questions sont à but pédagogique. En cas d'urgence réelle, appelez le <strong>15</strong>, <strong>18</strong> ou <strong>112</strong>.
+    </div>
+  </footer>
+
+  <script src="../js/vigio.js"></script>
+  <script src="../js/quiz.js"></script>
+</body>
+</html>
