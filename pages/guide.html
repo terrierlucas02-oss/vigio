@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vigio — Guidage d'urgence</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/guide.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a href="../index.html" class="nav-brand">
+      <svg class="nav-logo-svg" viewBox="0 0 40 40" fill="none"><path d="M32 8 A16 16 0 1 1 8 32" stroke="#C8943A" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+      <div class="nav-brand-text"><span class="nav-brand-name">Vigio</span><span class="nav-brand-sub">Premiers Secours</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Accueil</a>
+      <a href="chat.html">Assistant IA</a>
+      <a href="formation.html">Formation</a>
+      <a href="quiz.html">Quiz</a>
+    </div>
+    <button class="btn-urgence" onclick="callEmergency()">📞 Appeler le 15</button>
+  </nav>
+
+  <div class="page-container">
+    <div id="view-selector">
+      <div class="page-header">
+        <a href="../index.html" class="back-btn">← Accueil</a>
+        <h1 class="page-title">Guidage d'urgence</h1>
+        <p class="page-subtitle">Sélectionnez le type d'urgence. Je vous guide vocalement étape par étape.</p>
+      </div>
+      <div class="emergency-grid" id="emergency-grid">
+        <button class="emergency-btn e-rcp" onclick="startGuide('rcp')"><div class="e-icon">❤️</div><div class="e-info"><div class="e-title">Arrêt cardiaque</div><div class="e-sub">RCP · Massage cardiaque</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn e-etouffement" onclick="startGuide('etouffement')"><div class="e-icon">😮‍💨</div><div class="e-info"><div class="e-title">Étouffement</div><div class="e-sub">Manœuvre de Heimlich</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn e-avc" onclick="startGuide('avc')"><div class="e-icon">🧠</div><div class="e-info"><div class="e-title">AVC</div><div class="e-sub">Accident vasculaire cérébral</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn e-hemorragie" onclick="startGuide('hemorragie')"><div class="e-icon">🩸</div><div class="e-info"><div class="e-title">Hémorragie</div><div class="e-sub">Compression · Garrot</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn e-pls" onclick="startGuide('pls')"><div class="e-icon">🤕</div><div class="e-info"><div class="e-title">Inconscient qui respire</div><div class="e-sub">Position Latérale de Sécurité</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn e-brulure" onclick="startGuide('brulure')"><div class="e-icon">🔥</div><div class="e-info"><div class="e-title">Brûlure</div><div class="e-sub">Premiers soins brûlures</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn e-malaise" onclick="startGuide('malaise')"><div class="e-icon">💊</div><div class="e-info"><div class="e-title">Malaise</div><div class="e-sub">Hypoglycémie · Syncope</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn e-noyade" onclick="startGuide('noyade')"><div class="e-icon">🌊</div><div class="e-info"><div class="e-title">Noyade</div><div class="e-sub">Extraction · RCP aquatique</div></div><div class="e-arrow">→</div></button>
+      </div>
+    </div>
+
+    <div id="view-guide" style="display:none;">
+      <div class="guide-header">
+        <button class="back-btn" onclick="stopGuide()">← Choisir une autre urgence</button>
+        <div class="guide-title-row">
+          <h1 class="page-title" id="guide-title">-</h1>
+          <div class="guide-controls">
+            <button class="ctrl-btn" id="btn-voice" onclick="toggleVoice()" title="Voix">🔊</button>
+            <button class="ctrl-btn ctrl-stop" onclick="stopGuide()" title="Arrêter">✕</button>
+          </div>
+        </div>
+        <div class="emergency-bar">
+          <span>🚨 En cas de doute, appelez :</span>
+          <a href="tel:15" class="emerg-num">15</a>
+          <a href="tel:18" class="emerg-num">18</a>
+          <a href="tel:112" class="emerg-num">112</a>
+        </div>
+      </div>
+      <div class="steps-container" id="steps-container"></div>
+      <div id="metronome-section" style="display:none;">
+        <div class="metro-card">
+          <div class="metro-title">⏱ Métronome RCP — 100 bpm</div>
+          <div class="metro-visual">
+            <div class="metro-beat" id="metro-beat">💗</div>
+            <div class="metro-bpm">100 compressions / minute</div>
+          </div>
+          <div class="metro-btns">
+            <button class="btn-primary" onclick="startMetronome()" id="btn-metro-start">▶ Démarrer</button>
+            <button class="btn-secondary" onclick="stopMetronome()" id="btn-metro-stop" style="display:none;">⏸ Pause</button>
+          </div>
+          <div class="metro-tip">Comptez : 1, 2, 3… 30 compressions, puis 2 insufflations</div>
+        </div>
+      </div>
+      <div id="timer-section" style="display:none;">
+        <div class="timer-card">
+          <div class="timer-display" id="timer-display">00:00</div>
+          <div class="timer-label" id="timer-label">Durée depuis le début</div>
+          <button class="btn-secondary" onclick="toggleTimer()" id="btn-timer">▶ Démarrer le chrono</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-disclaimer">Vigio est un outil d'aide. En cas d'urgence, appelez le <strong>15</strong>, <strong>18</strong> ou <strong>112</strong>.</div>
+    <div class="footer-nums"><a href="tel:15">15 — SAMU</a><a href="tel:18">18 — Pompiers</a><a href="tel:112">112</a></div>
+  </footer>
+
+  <script src="../js/vigio.js"></script>
+  <script src="../js/guide.js"></script>
+</body>
+</html>

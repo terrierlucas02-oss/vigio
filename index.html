@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vigio — Premiers Secours</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/home.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <svg class="nav-logo-svg" viewBox="0 0 40 40" fill="none">
+        <path d="M32 8 A16 16 0 1 1 8 32" stroke="#C8943A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      </svg>
+      <div class="nav-brand-text">
+        <span class="nav-brand-name">Vigio</span>
+        <span class="nav-brand-sub">Premiers Secours</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="pages/guide.html">Guidage</a>
+      <a href="pages/chat.html">Assistant IA</a>
+      <a href="pages/formation.html">Formation</a>
+      <a href="pages/quiz.html">Quiz</a>
+    </div>
+    <button class="btn-urgence" onclick="window.location.href='pages/guide.html'">🚨 Urgence</button>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="pulse-ring r1"></div>
+      <div class="pulse-ring r2"></div>
+      <div class="pulse-ring r3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-logo">
+        <svg class="hero-logo-svg" viewBox="0 0 200 200" fill="none">
+          <path d="M152 36 A72 72 0 1 1 36 152" stroke="#C8943A" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          <text x="100" y="96" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="28" letter-spacing="7" fill="#F4F1EC">VIGIO</text>
+          <text x="100" y="116" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" letter-spacing="4" fill="#C8943A">PREMIERS SECOURS</text>
+          <text x="100" y="144" text-anchor="middle" font-family="Georgia,serif" font-size="8" letter-spacing="2" fill="#C8943A" opacity="0.55" font-style="italic">L'instant qui sauve</text>
+        </svg>
+      </div>
+      <h1 class="hero-title">Chaque seconde<span class="accent">compte.</span></h1>
+      <p class="hero-sub">Vigio vous guide pas à pas lors d'une urgence médicale.<br/>Voix, IA, formation — tout en un.</p>
+      <div class="hero-cta">
+        <a href="pages/guide.html" class="btn-primary">🚨 Besoin d'aide maintenant</a>
+        <a href="pages/formation.html" class="btn-secondary">📚 Me former</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="ecg-container">
+        <svg class="ecg-line" viewBox="0 0 600 120" preserveAspectRatio="none">
+          <polyline class="ecg-path" points="0,60 60,60 80,60 90,20 100,100 110,10 120,90 130,60 200,60 220,60 230,60 240,20 250,100 260,10 270,90 280,60 350,60 370,60 380,60 390,20 400,100 410,10 420,90 430,60 600,60"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="modules">
+    <h2 class="section-title">Quatre modules, une mission</h2>
+    <div class="modules-grid">
+      <a href="pages/guide.html" class="module-card card-urgence">
+        <div class="module-icon">🚨</div>
+        <h3>Guidage d'urgence</h3>
+        <p>Instructions vocales étape par étape pour RCP, étouffement, AVC et plus encore.</p>
+        <div class="module-tag">Vocal · Temps réel · ElevenLabs</div>
+        <div class="module-arrow">→</div>
+      </a>
+      <a href="pages/chat.html" class="module-card">
+        <div class="module-icon">🤖</div>
+        <h3>Assistant IA</h3>
+        <p>Posez vos questions à l'IA spécialisée en premiers secours. Disponible 24h/24.</p>
+        <div class="module-tag">Claude · IA · Chat</div>
+        <div class="module-arrow">→</div>
+      </a>
+      <a href="pages/formation.html" class="module-card">
+        <div class="module-icon">📚</div>
+        <h3>Formation</h3>
+        <p>Apprenez les gestes qui sauvent avec des fiches claires et mémorisables.</p>
+        <div class="module-tag">12 fiches · Détaillées</div>
+        <div class="module-arrow">→</div>
+      </a>
+      <a href="pages/quiz.html" class="module-card">
+        <div class="module-icon">🎯</div>
+        <h3>Quiz</h3>
+        <p>Testez vos connaissances avec des quiz progressifs et suivez votre progression.</p>
+        <div class="module-tag">28 questions · Score</div>
+        <div class="module-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat-item">
+      <div class="stat-number">3<span>min</span></div>
+      <div class="stat-label">Sans oxygène, les dégâts cérébraux commencent</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-number">80<span>%</span></div>
+      <div class="stat-label">Des arrêts cardiaques ont lieu en présence de témoins</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-number">3×</div>
+      <div class="stat-label">Plus de chances de survie avec une RCP immédiate</div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-brand">Vigio</div>
+    <p class="footer-disclaimer">Vigio est un outil d'aide et ne remplace pas les services d'urgence.<br/>En cas d'urgence, appelez le <strong>15</strong> (SAMU), <strong>18</strong> (Pompiers) ou <strong>112</strong>.</p>
+    <div class="footer-nums">
+      <a href="tel:15">15 — SAMU</a>
+      <a href="tel:18">18 — Pompiers</a>
+      <a href="tel:112">112 — Urgences</a>
+    </div>
+  </footer>
+
+</body>
+</html>

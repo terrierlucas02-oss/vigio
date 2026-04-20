@@ -1,0 +1,53 @@
+/* VIGIO — HOME CSS */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;padding:80px 24px 60px;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(200,148,58,0.07),transparent 70%);pointer-events:none}
+.hero-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.pulse-ring{position:absolute;border-radius:50%;border:1px solid rgba(200,148,58,0.1);animation:ripple 5s ease-out infinite}
+.r1{width:280px;height:280px;animation-delay:0s}
+.r2{width:480px;height:480px;animation-delay:1.7s}
+.r3{width:680px;height:680px;animation-delay:3.4s}
+.hero-content{position:relative;z-index:2;max-width:680px}
+.hero-logo{margin:0 auto 32px;animation:fadeUp 0.5s ease both}
+.hero-logo-svg{width:150px;height:150px}
+.hero-title{font-family:var(--font-display);font-weight:700;font-size:clamp(44px,8vw,86px);line-height:1.05;color:var(--cream);animation:fadeUp 0.5s 0.1s ease both}
+.hero-title .accent{color:var(--gold);display:block;font-style:italic}
+.hero-sub{color:var(--text-muted);font-size:clamp(15px,1.8vw,18px);line-height:1.7;margin-top:20px;animation:fadeUp 0.5s 0.2s ease both}
+.hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px;animation:fadeUp 0.5s 0.3s ease both}
+.hero-visual{position:relative;z-index:2;width:100%;max-width:560px;margin-top:52px;animation:fadeUp 0.5s 0.4s ease both}
+.ecg-container{position:relative;width:100%;height:72px}
+.ecg-line{width:100%;height:100%}
+.ecg-path{fill:none;stroke:var(--gold);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1200;stroke-dashoffset:1200;animation:drawECG 3s ease forwards 0.9s,ecgPulse 3s ease infinite 3.9s;opacity:0.75}
+@keyframes drawECG{to{stroke-dashoffset:0}}
+@keyframes ecgPulse{0%{stroke-dashoffset:0;opacity:0.75}80%{stroke-dashoffset:-1200;opacity:0.75}81%{stroke-dashoffset:1200;opacity:0}84%{opacity:0.75}100%{stroke-dashoffset:0;opacity:0.75}}
+
+/* MODULES */
+.modules{padding:80px 24px;max-width:1080px;margin:0 auto}
+.modules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.module-card{display:block;position:relative;background:rgba(26,58,92,0.28);border:1px solid var(--border);border-radius:var(--radius-lg);padding:30px;transition:all 0.3s ease;overflow:hidden}
+.module-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.3s;border-radius:inherit;background:radial-gradient(circle at 20% 20%,rgba(200,148,58,0.07),transparent 60%)}
+.module-card:hover::before{opacity:1}
+.module-card:hover{border-color:var(--border-gold);transform:translateY(-4px);box-shadow:var(--shadow-gold)}
+.card-urgence{border-color:rgba(192,57,43,0.2)}
+.card-urgence::before{background:radial-gradient(circle at 20% 20%,rgba(192,57,43,0.08),transparent 60%) !important}
+.card-urgence:hover{border-color:rgba(192,57,43,0.45) !important;box-shadow:0 8px 32px rgba(192,57,43,0.2) !important}
+.module-icon{font-size:30px;margin-bottom:14px;display:block}
+.module-card h3{font-family:var(--font-display);font-weight:700;font-size:18px;margin-bottom:10px;color:var(--cream);letter-spacing:0.3px}
+.module-card p{color:var(--text-muted);font-size:14px;line-height:1.6}
+.module-tag{margin-top:18px;font-size:10.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold-dim)}
+.module-arrow{position:absolute;top:26px;right:26px;font-size:18px;color:var(--text-dim);transition:all 0.3s}
+.module-card:hover .module-arrow{color:var(--gold);transform:translateX(4px)}
+
+/* STATS */
+.stats{display:flex;align-items:center;justify-content:center;padding:60px 24px 80px;max-width:860px;margin:0 auto}
+.stat-item{flex:1;text-align:center;padding:0 28px}
+.stat-number{font-family:var(--font-display);font-weight:700;font-size:clamp(36px,5.5vw,58px);color:var(--gold);letter-spacing:-1px;line-height:1;font-style:italic}
+.stat-number span{font-size:0.55em;letter-spacing:0;font-style:normal}
+.stat-label{color:var(--text-muted);font-size:13px;line-height:1.55;margin-top:8px;max-width:160px;margin-left:auto;margin-right:auto}
+.stat-divider{width:1px;height:70px;background:var(--border);flex-shrink:0}
+
+@media(max-width:768px){
+  .modules-grid{grid-template-columns:1fr}
+  .stats{flex-direction:column;gap:32px}
+  .stat-divider{width:50px;height:1px}
+  .hero-logo-svg{width:120px;height:120px}
+}
