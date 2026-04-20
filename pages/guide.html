@@ -6,6 +6,156 @@
   <title>Vigio — Guidage d'urgence</title>
   <link rel="stylesheet" href="../css/main.css" />
   <link rel="stylesheet" href="../css/guide.css" />
+  <style>
+    /* ── MODE VOCAL IA ── */
+    .vocal-launch {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--navy);
+      border: 1px solid rgba(200,148,58,0.3);
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .vocal-launch-text {
+      flex: 1;
+      min-width: 200px;
+    }
+    .vocal-launch-text strong {
+      display: block;
+      color: var(--cream);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .vocal-launch-text span {
+      color: rgba(244,241,236,0.5);
+      font-size: 12px;
+    }
+    #btn-vocal-mode {
+      padding: 10px 20px;
+      background: var(--gold);
+      color: var(--navy);
+      border: 1px solid var(--gold);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+      font-family: var(--font-body);
+    }
+    #btn-vocal-mode:hover { background: var(--gold-light); }
+
+    /* Panel vocal */
+    #vocal-panel {
+      display: none;
+      background: var(--navy);
+      border: 1px solid rgba(200,148,58,0.25);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .vocal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .vocal-indicator {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--text-dim);
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+    .vocal-indicator.listening {
+      background: var(--gold);
+      animation: vocalPulse 1s ease infinite;
+    }
+    .vocal-indicator.thinking {
+      background: #60A5FA;
+      animation: vocalPulse 0.6s ease infinite;
+    }
+    .vocal-indicator.speaking {
+      background: #4ADE80;
+      animation: vocalPulse 0.4s ease infinite;
+    }
+
+    @keyframes vocalPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.7; }
+    }
+
+    #vocal-status-text {
+      color: var(--cream);
+      font-size: 14px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .vocal-commands {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .vocal-cmd {
+      padding: 3px 10px;
+      background: rgba(200,148,58,0.12);
+      border: 1px solid rgba(200,148,58,0.2);
+      border-radius: 99px;
+      font-size: 11px;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    #vocal-log {
+      max-height: 180px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .vocal-msg {
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .vocal-user {
+      background: rgba(200,148,58,0.12);
+      color: var(--cream);
+      align-self: flex-end;
+      max-width: 85%;
+    }
+
+    .vocal-assistant {
+      background: rgba(255,255,255,0.06);
+      color: rgba(244,241,236,0.85);
+      align-self: flex-start;
+      max-width: 90%;
+    }
+
+    .vocal-role {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--gold);
+      margin-bottom: 3px;
+    }
+
+    .vocal-assistant .vocal-role { color: rgba(244,241,236,0.4); }
+  </style>
 </head>
 <body>
   <nav class="nav">
@@ -23,24 +173,27 @@
   </nav>
 
   <div class="page-container">
+
+    <!-- SELECTOR -->
     <div id="view-selector">
       <div class="page-header">
         <a href="../index.html" class="back-btn">← Accueil</a>
         <h1 class="page-title">Guidage d'urgence</h1>
         <p class="page-subtitle">Sélectionnez le type d'urgence. Je vous guide vocalement étape par étape.</p>
       </div>
-      <div class="emergency-grid" id="emergency-grid">
+      <div class="emergency-grid">
         <button class="emergency-btn e-rcp" onclick="startGuide('rcp')"><div class="e-icon">❤️</div><div class="e-info"><div class="e-title">Arrêt cardiaque</div><div class="e-sub">RCP · Massage cardiaque</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn e-etouffement" onclick="startGuide('etouffement')"><div class="e-icon">😮‍💨</div><div class="e-info"><div class="e-title">Étouffement</div><div class="e-sub">Manœuvre de Heimlich</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn e-avc" onclick="startGuide('avc')"><div class="e-icon">🧠</div><div class="e-info"><div class="e-title">AVC</div><div class="e-sub">Accident vasculaire cérébral</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn e-hemorragie" onclick="startGuide('hemorragie')"><div class="e-icon">🩸</div><div class="e-info"><div class="e-title">Hémorragie</div><div class="e-sub">Compression · Garrot</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn e-pls" onclick="startGuide('pls')"><div class="e-icon">🤕</div><div class="e-info"><div class="e-title">Inconscient qui respire</div><div class="e-sub">Position Latérale de Sécurité</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn e-brulure" onclick="startGuide('brulure')"><div class="e-icon">🔥</div><div class="e-info"><div class="e-title">Brûlure</div><div class="e-sub">Premiers soins brûlures</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn e-malaise" onclick="startGuide('malaise')"><div class="e-icon">💊</div><div class="e-info"><div class="e-title">Malaise</div><div class="e-sub">Hypoglycémie · Syncope</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn e-noyade" onclick="startGuide('noyade')"><div class="e-icon">🌊</div><div class="e-info"><div class="e-title">Noyade</div><div class="e-sub">Extraction · RCP aquatique</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn" onclick="startGuide('etouffement')"><div class="e-icon">😮‍💨</div><div class="e-info"><div class="e-title">Étouffement</div><div class="e-sub">Manœuvre de Heimlich</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn" onclick="startGuide('avc')"><div class="e-icon">🧠</div><div class="e-info"><div class="e-title">AVC</div><div class="e-sub">Accident vasculaire cérébral</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn" onclick="startGuide('hemorragie')"><div class="e-icon">🩸</div><div class="e-info"><div class="e-title">Hémorragie</div><div class="e-sub">Compression · Garrot</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn" onclick="startGuide('pls')"><div class="e-icon">🤕</div><div class="e-info"><div class="e-title">Inconscient qui respire</div><div class="e-sub">Position Latérale de Sécurité</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn" onclick="startGuide('brulure')"><div class="e-icon">🔥</div><div class="e-info"><div class="e-title">Brûlure</div><div class="e-sub">Premiers soins brûlures</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn" onclick="startGuide('malaise')"><div class="e-icon">💊</div><div class="e-info"><div class="e-title">Malaise</div><div class="e-sub">Hypoglycémie · Syncope</div></div><div class="e-arrow">→</div></button>
+        <button class="emergency-btn" onclick="startGuide('noyade')"><div class="e-icon">🌊</div><div class="e-info"><div class="e-title">Noyade</div><div class="e-sub">Extraction · RCP aquatique</div></div><div class="e-arrow">→</div></button>
       </div>
     </div>
 
+    <!-- GUIDE ACTIF -->
     <div id="view-guide" style="display:none;">
       <div class="guide-header">
         <button class="back-btn" onclick="stopGuide()">← Choisir une autre urgence</button>
@@ -58,7 +211,36 @@
           <a href="tel:112" class="emerg-num">112</a>
         </div>
       </div>
+
+      <!-- BOUTON MODE VOCAL -->
+      <div class="vocal-launch">
+        <div class="vocal-launch-text">
+          <strong>🎙 Mode vocal IA — mains libres</strong>
+          <span>Parlez à Vigio. Dites "suivant", "répète" ou posez une question.</span>
+        </div>
+        <button id="btn-vocal-mode" onclick="toggleVocalMode()">🎙 Mode vocal IA</button>
+      </div>
+
+      <!-- PANEL VOCAL -->
+      <div id="vocal-panel">
+        <div class="vocal-header">
+          <div class="vocal-indicator" id="vocal-indicator"></div>
+          <div id="vocal-status-text">Initialisation...</div>
+        </div>
+        <div class="vocal-commands">
+          <span class="vocal-cmd">« suivant »</span>
+          <span class="vocal-cmd">« répète »</span>
+          <span class="vocal-cmd">« précédent »</span>
+          <span class="vocal-cmd">« appelle »</span>
+          <span class="vocal-cmd">ou posez une question</span>
+        </div>
+        <div id="vocal-log"></div>
+      </div>
+
+      <!-- STEPS -->
       <div class="steps-container" id="steps-container"></div>
+
+      <!-- METRONOME -->
       <div id="metronome-section" style="display:none;">
         <div class="metro-card">
           <div class="metro-title">⏱ Métronome RCP — 100 bpm</div>
@@ -73,10 +255,12 @@
           <div class="metro-tip">Comptez : 1, 2, 3… 30 compressions, puis 2 insufflations</div>
         </div>
       </div>
+
+      <!-- TIMER -->
       <div id="timer-section" style="display:none;">
         <div class="timer-card">
           <div class="timer-display" id="timer-display">00:00</div>
-          <div class="timer-label" id="timer-label">Durée depuis le début</div>
+          <div class="timer-label">Durée depuis le début</div>
           <button class="btn-secondary" onclick="toggleTimer()" id="btn-timer">▶ Démarrer le chrono</button>
         </div>
       </div>
