@@ -49,9 +49,9 @@ const VigioVoice = {
         text,
         model_id: VIGIO_CONFIG.ELEVENLABS_MODEL,
         voice_settings: {
-          stability: 0.5,
-          similarity_boost: 0.75,
-          style: 0.3,
+          stability: 0.6,
+          similarity_boost: 0.8,
+          style: 0.2,
           use_speaker_boost: true,
         },
       }),
@@ -67,11 +67,17 @@ const VigioVoice = {
 
     return new Promise((resolve, reject) => {
       const audio = new Audio(audioUrl);
-      audio.crossOrigin = "anonymous";
       window.__vigioAudio = audio;
-      audio.onended = () => { URL.revokeObjectURL(audioUrl); resolve(); };
-      audio.onerror = (e) => { URL.revokeObjectURL(audioUrl); reject(e); };
-      audio.play().catch(reject);
+      const cleanup = () => {
+        URL.revokeObjectURL(audioUrl);
+        window.__vigioAudio = null;
+      };
+      audio.onended = () => { cleanup(); resolve(); };
+      audio.onerror = (e) => { cleanup(); reject(e); };
+      // Timeout de sécurité : 60s max
+      const timeout = setTimeout(() => { audio.pause(); cleanup(); resolve(); }, 60000);
+      audio.onended = () => { clearTimeout(timeout); cleanup(); resolve(); };
+      audio.play().catch((e) => { cleanup(); reject(e); });
     });
   },
 
@@ -100,6 +106,7 @@ const VigioVoice = {
     this._playing = false;
     if (window.__vigioAudio) {
       window.__vigioAudio.pause();
+      window.__vigioAudio.currentTime = 0;
       window.__vigioAudio = null;
     }
     window.speechSynthesis && window.speechSynthesis.cancel();
@@ -141,16 +148,21 @@ RÈGLES STRICTES :
 
     const messages = history.slice(-4).concat([{ role: "user", content: contextMsg }]);
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 150,
+        max_tokens: 120,
         system: VOCAL_SYSTEM,
         messages,
       }),
     });
+    clearTimeout(timeout);
     if (!res.ok) throw new Error(`API ${res.status}`);
     const data = await res.json();
     return data.content?.[0]?.text || "Continuez, vous faites bien.";
