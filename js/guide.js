@@ -274,6 +274,22 @@ async function startVocalMode() {
   startListening();
 }
 
+function waitAndListen(delay = 500) {
+  if (!vocalMode) return;
+  const check = () => {
+    if (!vocalMode) return;
+    const audio = window.__vigioAudio;
+    if (audio && !audio.paused && !audio.ended) {
+      // La voix parle encore, on attend
+      setTimeout(check, 200);
+    } else {
+      // La voix a fini, on peut écouter
+      setTimeout(() => vocalMode && startListening(), delay);
+    }
+  };
+  setTimeout(check, 100);
+}
+
 function stopVocalMode() {
   vocalMode = false;
   isListening = false;
@@ -300,8 +316,23 @@ function updateVocalBtn() {
   }
 }
 
+function stopListening() {
+  isListening = false;
+  if (recognition) {
+    try { recognition.abort(); } catch(e) {}
+    recognition = null;
+  }
+}
+
 function startListening() {
   if (!vocalMode) return;
+  // Ne pas écouter si la voix parle encore
+  if (window.__vigioAudio && !window.__vigioAudio.paused) {
+    setTimeout(() => vocalMode && startListening(), 300);
+    return;
+  }
+
+  stopListening();
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SpeechRecognition();
@@ -338,13 +369,13 @@ function startListening() {
       handleVocalInput(finalTranscript.trim());
     } else if (vocalMode) {
       // Relancer l'écoute si rien n'a été capté
-      setTimeout(() => vocalMode && startListening(), 500);
+      waitAndListen(1000);
     }
   };
 
   recognition.onerror = (e) => {
     if (e.error === "no-speech" && vocalMode) {
-      setTimeout(() => vocalMode && startListening(), 800);
+      waitAndListen(1200);
     }
   };
 
@@ -353,6 +384,7 @@ function startListening() {
 
 async function handleVocalInput(text) {
   if (!vocalMode || !currentProtocol) return;
+  stopListening();
 
   setVocalStatus("thinking", `Vous : "${text}"`);
   addVocalMessage("user", text);
@@ -386,7 +418,7 @@ async function handleVocalInput(text) {
     const msg = step.voice || step.text;
     addVocalMessage("assistant", msg);
     await VigioVoice.speak(msg, true);
-    setTimeout(() => vocalMode && startListening(), 500);
+    waitAndListen(1000);
     return;
   }
 
@@ -397,7 +429,7 @@ async function handleVocalInput(text) {
     const msg = `Retour à l'étape ${currentStep + 1} : ${step.voice || step.text}`;
     addVocalMessage("assistant", msg);
     await VigioVoice.speak(msg, true);
-    setTimeout(() => vocalMode && startListening(), 500);
+    waitAndListen(1000);
     return;
   }
 
@@ -412,7 +444,7 @@ async function handleVocalInput(text) {
     const msg = `Étape ${currentStep + 1} : ${step.voice || step.text}`;
     addVocalMessage("assistant", msg);
     await VigioVoice.speak(msg, true);
-    setTimeout(() => vocalMode && startListening(), 800);
+    waitAndListen(1200);
     return;
   }
 
@@ -448,13 +480,13 @@ Rappelle toujours d'appeler le 15 en cas de doute.`;
     setVocalStatus("speaking", "Vigio parle...");
 
     await VigioVoice.speak(reply, true);
-    setTimeout(() => vocalMode && startListening(), 600);
+    waitAndListen(1000);
 
   } catch(e) {
     const fallback = "Je n'ai pas pu répondre. Continuez ou dites 'suivant'.";
     addVocalMessage("assistant", fallback);
     await VigioVoice.speak(fallback, true);
-    setTimeout(() => vocalMode && startListening(), 600);
+    waitAndListen(1000);
   }
 }
 

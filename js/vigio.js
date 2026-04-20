@@ -128,6 +128,33 @@ Tu ne poses pas de diagnostics médicaux. Tes réponses sont courtes, directes e
     const data = await res.json();
     return data.content?.[0]?.text || "Désolé, je n'ai pas pu répondre.";
   },
+
+  async askVocal(contextMsg, history = []) {
+    const VOCAL_SYSTEM = `Tu es Vigio, assistant vocal de premiers secours. Tu guides quelqu'un en situation d'urgence.
+RÈGLES STRICTES :
+- Réponds en 1 à 2 phrases MAXIMUM, courtes et claires
+- Parle directement, sans formules de politesse
+- Si la question porte sur le geste actuel, explique simplement
+- Si tu ne sais pas, dis "Continuez le geste, les secours arrivent"
+- Rappelle d'appeler le 15 si c'est urgent
+- Ne dis JAMAIS "je n'ai pas pu répondre" ou des phrases d'erreur`;
+
+    const messages = history.slice(-4).concat([{ role: "user", content: contextMsg }]);
+
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 150,
+        system: VOCAL_SYSTEM,
+        messages,
+      }),
+    });
+    if (!res.ok) throw new Error(`API ${res.status}`);
+    const data = await res.json();
+    return data.content?.[0]?.text || "Continuez, vous faites bien.";
+  },
 };
 
 function vigioSaveProgress(key, data) {
