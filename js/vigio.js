@@ -1,7 +1,7 @@
 // VIGIO — CONFIG & UTILITAIRES
 const VIGIO_CONFIG = {
   ELEVENLABS_API_KEY: "sk_6e7a75914f63e645d6b95f7276eb8ff9ec0ef95a87983e44",
-  ELEVENLABS_VOICE_ID: "YOUR_VOICE_ID",
+  ELEVENLABS_VOICE_ID: "JJY20xvzXUwTxyhBLBDX",
   ELEVENLABS_MODEL: "eleven_multilingual_v2",
 };
 
@@ -20,7 +20,7 @@ const VigioVoice = {
     this._processQueue();
   },
   async _playText(text) {
-    if (VIGIO_CONFIG.ELEVENLABS_VOICE_ID === "YOUR_VOICE_ID") throw new Error("No voice ID");
+    
     const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VIGIO_CONFIG.ELEVENLABS_VOICE_ID}`, {
       method: "POST",
       headers: { "xi-api-key": VIGIO_CONFIG.ELEVENLABS_API_KEY, "Content-Type": "application/json" },

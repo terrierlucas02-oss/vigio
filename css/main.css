@@ -1,31 +1,38 @@
-/* VIGIO — MAIN CSS — Charte bleu nuit + or + Georgia */
+/* VIGIO — MAIN CSS — Fond blanc + bleu sur nav/cartes */
 :root {
-  --bg:          #0D1B2A;
-  --bg2:         #0A1520;
+  --bg:          #FFFFFF;
+  --bg2:         #F7F8FA;
+  --bg3:         #EEF1F5;
   --surface:     #1A3A5C;
   --surface2:    #1f4570;
-  --border:      rgba(200,148,58,0.15);
-  --border-gold: rgba(200,148,58,0.35);
+  --border:      rgba(200,148,58,0.2);
+  --border-gold: rgba(200,148,58,0.4);
+  --border-light: rgba(0,0,0,0.08);
   --gold:        #C8943A;
   --gold-light:  #dba84d;
   --gold-glow:   rgba(200,148,58,0.10);
-  --gold-dim:    rgba(200,148,58,0.5);
+  --gold-dim:    rgba(200,148,58,0.6);
+  --navy:        #0D1B2A;
+  --navy2:       #1A3A5C;
   --cream:       #F4F1EC;
-  --text:        #F4F1EC;
-  --text-muted:  rgba(244,241,236,0.55);
-  --text-dim:    rgba(244,241,236,0.28);
+  --text:        #1C1C1A;
+  --text-muted:  #6B7280;
+  --text-dim:    #9CA3AF;
+  --text-on-dark: #F4F1EC;
+  --text-muted-dark: rgba(244,241,236,0.6);
   --red:         #C0392B;
   --red-light:   #e04535;
-  --red-glow:    rgba(192,57,43,0.18);
-  --border-red:  rgba(192,57,43,0.35);
+  --red-glow:    rgba(192,57,43,0.12);
+  --border-red:  rgba(192,57,43,0.3);
   --green:       #2E7D5E;
   --font-display: Georgia, serif;
   --font-body:    system-ui, -apple-system, sans-serif;
   --radius:    14px;
   --radius-sm: 8px;
   --radius-lg: 20px;
-  --shadow:      0 8px 40px rgba(0,0,0,0.5);
-  --shadow-gold: 0 8px 32px rgba(200,148,58,0.2);
+  --shadow:      0 4px 24px rgba(0,0,0,0.08);
+  --shadow-gold: 0 8px 32px rgba(200,148,58,0.18);
+  --shadow-navy: 0 8px 32px rgba(13,27,42,0.15);
   --transition:  0.22s cubic-bezier(0.4,0,0.2,1);
 }
 
@@ -36,35 +43,35 @@ a{color:inherit;text-decoration:none}
 button{cursor:pointer;border:none;background:none;font-family:var(--font-body)}
 input,textarea{font-family:var(--font-body)}
 
-/* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:32px;padding:0 36px;height:68px;background:rgba(13,27,42,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+/* NAV — fond bleu nuit */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:32px;padding:0 36px;height:68px;background:var(--navy);backdrop-filter:blur(20px);border-bottom:1px solid rgba(200,148,58,0.15)}
 .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
 .nav-logo-svg{width:34px;height:34px;flex-shrink:0}
 .nav-brand-text{display:flex;flex-direction:column;line-height:1}
 .nav-brand-name{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:4px;color:var(--cream);text-transform:uppercase}
 .nav-brand-sub{font-size:8.5px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;margin-top:3px;font-style:italic}
 .nav-links{display:flex;align-items:center;gap:2px;flex:1}
-.nav-links a{padding:7px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;color:var(--text-muted);transition:var(--transition)}
-.nav-links a:hover{color:var(--cream);background:var(--gold-glow)}
+.nav-links a{padding:7px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;color:rgba(244,241,236,0.65);transition:var(--transition)}
+.nav-links a:hover{color:var(--cream);background:rgba(200,148,58,0.1)}
 .btn-urgence{padding:9px 20px;background:var(--red);color:white;border-radius:var(--radius-sm);font-size:13px;font-weight:600;transition:var(--transition);white-space:nowrap;border:1px solid transparent}
 .btn-urgence:hover{background:var(--red-light);box-shadow:0 4px 20px rgba(192,57,43,0.35);transform:translateY(-1px)}
 
 /* BOUTONS */
-.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:var(--gold);color:var(--bg);border-radius:var(--radius);font-weight:600;font-size:15px;transition:var(--transition);border:1px solid var(--gold)}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:var(--gold);color:white;border-radius:var(--radius);font-weight:600;font-size:15px;transition:var(--transition);border:1px solid var(--gold)}
 .btn-primary:hover{background:var(--gold-light);border-color:var(--gold-light);box-shadow:var(--shadow-gold);transform:translateY(-2px)}
-.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:transparent;color:var(--cream);border-radius:var(--radius);font-weight:500;font-size:15px;transition:var(--transition);border:1px solid var(--border-gold)}
-.btn-secondary:hover{background:var(--gold-glow);border-color:var(--gold);transform:translateY(-2px)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:transparent;color:var(--navy);border-radius:var(--radius);font-weight:500;font-size:15px;transition:var(--transition);border:1px solid rgba(13,27,42,0.2)}
+.btn-secondary:hover{background:var(--bg3);border-color:var(--navy);transform:translateY(-2px)}
 
 /* FOOTER */
-.footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px}
+.footer{background:var(--navy);border-top:1px solid rgba(200,148,58,0.15);padding:40px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px}
 .footer-brand{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:4px;text-transform:uppercase;color:var(--cream)}
-.footer-disclaimer{color:var(--text-muted);font-size:13px;line-height:1.7;max-width:500px}
+.footer-disclaimer{color:rgba(244,241,236,0.55);font-size:13px;line-height:1.7;max-width:500px}
 .footer-nums{display:flex;gap:24px;flex-wrap:wrap;justify-content:center}
 .footer-nums a{color:var(--gold);font-weight:600;font-size:14px;transition:var(--transition)}
 .footer-nums a:hover{color:var(--gold-light)}
 
 /* SECTION TITLE */
-.section-title{font-family:var(--font-display);font-weight:700;font-size:clamp(24px,3.5vw,38px);text-align:center;margin-bottom:48px;color:var(--cream);letter-spacing:0.5px}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:clamp(24px,3.5vw,38px);text-align:center;margin-bottom:48px;color:var(--navy);letter-spacing:0.5px}
 
 /* BACK */
 .back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--text-muted);font-size:13px;font-weight:500;padding:8px 0;transition:var(--transition)}
@@ -73,27 +80,27 @@ input,textarea{font-family:var(--font-body)}
 /* PAGE */
 .page-container{max-width:900px;margin:0 auto;padding:100px 24px 60px}
 .page-header{margin-bottom:40px}
-.page-title{font-family:var(--font-display);font-weight:700;font-size:clamp(26px,4.5vw,44px);letter-spacing:0.5px;line-height:1.15;margin-top:12px;color:var(--cream)}
+.page-title{font-family:var(--font-display);font-weight:700;font-size:clamp(26px,4.5vw,44px);letter-spacing:0.5px;line-height:1.15;margin-top:12px;color:var(--navy)}
 .page-subtitle{color:var(--text-muted);font-size:15px;margin-top:10px;line-height:1.65}
 
 /* CARD */
-.card{background:rgba(26,58,92,0.35);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:var(--transition)}
+.card{background:white;border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:28px;transition:var(--transition);box-shadow:var(--shadow)}
 
 /* BADGE */
 .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase}
-.badge-red{background:var(--red-glow);color:#e05a4a;border:1px solid var(--border-red)}
+.badge-red{background:var(--red-glow);color:var(--red);border:1px solid var(--border-red)}
 .badge-gold{background:var(--gold-glow);color:var(--gold);border:1px solid var(--border-gold)}
-.badge-green{background:rgba(46,125,94,0.15);color:#4ade80;border:1px solid rgba(46,125,94,0.3)}
+.badge-green{background:rgba(46,125,94,0.1);color:var(--green);border:1px solid rgba(46,125,94,0.25)}
 
 /* SCROLLBAR */
 ::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--surface);border-radius:99px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:99px}
 
 /* ANIMATIONS */
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.07);opacity:0.75}}
-@keyframes ripple{0%{transform:scale(0.8);opacity:0.5}100%{transform:scale(2.8);opacity:0}}
+@keyframes ripple{0%{transform:scale(0.8);opacity:0.4}100%{transform:scale(2.8);opacity:0}}
 
 @media(max-width:768px){
   .nav{padding:0 16px;gap:16px}
