@@ -334,7 +334,9 @@ function startGuide(type) {
   document.getElementById("timer-section").style.display = proto.showTimer ? "block" : "none";
 
   renderSteps();
-  activateStep(0);
+  // Activer sans voix au chargement (navigateur bloque l'audio sans interaction)
+  activateStep(0, false);
+  // La voix se déclenche au premier clic sur "Étape suivante" ou "Répéter"
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -377,7 +379,7 @@ function renderSteps() {
 }
 
 // ── ACTIVATE STEP ──
-function activateStep(index) {
+function activateStep(index, withVoice = true) {
   const steps = document.querySelectorAll(".step-item");
   steps.forEach((el, i) => {
     el.classList.remove("active");
@@ -400,7 +402,7 @@ function activateStep(index) {
 
   activeEl.scrollIntoView({ behavior: "smooth", block: "center" });
 
-  if (voiceEnabled) {
+  if (voiceEnabled && withVoice) {
     const step = currentProtocol.steps[index];
     VigioVoice.speak(step.voice || step.text, true);
   }
@@ -435,7 +437,7 @@ function showComplete() {
     </div>
   `;
   container.appendChild(completeEl);
-  if (voiceEnabled) {
+  if (voiceEnabled && withVoice) {
     VigioVoice.speak("Guide terminé. Restez auprès de la victime et attendez l'arrivée des secours.", true);
   }
 }
