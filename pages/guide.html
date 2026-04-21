@@ -7,40 +7,111 @@
   <link rel="stylesheet" href="../css/main.css" />
   <link rel="stylesheet" href="../css/guide.css" />
   <style>
-    /* ── MODE VOCAL IA ── */
+    /* ── SÉLECTEUR VICTIME ── */
+    #view-victim { display: none; }
+
+    .victim-header {
+      margin-bottom: 32px;
+    }
+
+    .victim-question {
+      color: var(--text-muted);
+      font-size: 16px;
+      margin-top: 8px;
+    }
+
+    .victim-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 480px;
+    }
+
+    .victim-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: var(--navy);
+      border: 1px solid rgba(200,148,58,0.2);
+      border-radius: var(--radius);
+      color: var(--cream);
+      font-size: 16px;
+      font-weight: 600;
+      font-family: var(--font-display);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .victim-btn:hover {
+      border-color: var(--gold);
+      transform: translateX(6px);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .victim-arrow {
+      color: var(--gold);
+      font-size: 18px;
+    }
+
+    /* ── VIDEO PLAYER ── */
+    #video-container {
+      display: none;
+      margin-bottom: 20px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--navy);
+      border: 1px solid var(--border);
+      aspect-ratio: 16/9;
+      position: relative;
+    }
+
+    #video-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: none;
+    }
+
+    #video-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: rgba(244,241,236,0.3);
+      min-height: 200px;
+    }
+
+    #video-placeholder .placeholder-icon { font-size: 40px; opacity: 0.4; }
+    #video-placeholder .placeholder-text { font-size: 14px; font-style: italic; }
+
+    /* ── MODE VOCAL ── */
     .vocal-launch {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 16px 20px;
+      padding: 14px 18px;
       background: var(--navy);
-      border: 1px solid rgba(200,148,58,0.3);
+      border: 1px solid rgba(200,148,58,0.25);
       border-radius: var(--radius);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       flex-wrap: wrap;
     }
-    .vocal-launch-text {
-      flex: 1;
-      min-width: 200px;
-    }
-    .vocal-launch-text strong {
-      display: block;
-      color: var(--cream);
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-    .vocal-launch-text span {
-      color: rgba(244,241,236,0.5);
-      font-size: 12px;
-    }
+
+    .vocal-launch-text { flex: 1; min-width: 180px; }
+    .vocal-launch-text strong { display: block; color: var(--cream); font-size: 13px; margin-bottom: 2px; }
+    .vocal-launch-text span { color: rgba(244,241,236,0.4); font-size: 11.5px; }
+
     #btn-vocal-mode {
-      padding: 10px 20px;
+      padding: 9px 18px;
       background: var(--gold);
       color: var(--navy);
       border: 1px solid var(--gold);
       border-radius: var(--radius-sm);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
@@ -49,112 +120,34 @@
     }
     #btn-vocal-mode:hover { background: var(--gold-light); }
 
-    /* Panel vocal */
     #vocal-panel {
       display: none;
       background: var(--navy);
-      border: 1px solid rgba(200,148,58,0.25);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .vocal-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .vocal-indicator {
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: var(--text-dim);
-      flex-shrink: 0;
-      transition: all 0.3s;
-    }
-    .vocal-indicator.listening {
-      background: var(--gold);
-      animation: vocalPulse 1s ease infinite;
-    }
-    .vocal-indicator.thinking {
-      background: #60A5FA;
-      animation: vocalPulse 0.6s ease infinite;
-    }
-    .vocal-indicator.speaking {
-      background: #4ADE80;
-      animation: vocalPulse 0.4s ease infinite;
-    }
-
-    @keyframes vocalPulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.7; }
-    }
-
-    #vocal-status-text {
-      color: var(--cream);
-      font-size: 14px;
-      font-weight: 500;
-      flex: 1;
-    }
-
-    .vocal-commands {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-
-    .vocal-cmd {
-      padding: 3px 10px;
-      background: rgba(200,148,58,0.12);
       border: 1px solid rgba(200,148,58,0.2);
-      border-radius: 99px;
-      font-size: 11px;
-      color: var(--gold);
-      font-weight: 500;
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 18px;
     }
 
-    #vocal-log {
-      max-height: 180px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .vocal-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 
-    .vocal-msg {
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
+    .vocal-indicator { width: 12px; height: 12px; border-radius: 50%; background: rgba(244,241,236,0.2); flex-shrink: 0; transition: all 0.3s; }
+    .vocal-indicator.listening { background: var(--gold); animation: vPulse 1s ease infinite; }
+    .vocal-indicator.thinking { background: #60A5FA; animation: vPulse 0.6s ease infinite; }
+    .vocal-indicator.speaking { background: #4ADE80; animation: vPulse 0.4s ease infinite; }
+    @keyframes vPulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.5);opacity:0.6} }
 
-    .vocal-user {
-      background: rgba(200,148,58,0.12);
-      color: var(--cream);
-      align-self: flex-end;
-      max-width: 85%;
-    }
+    #vocal-status-text { color: var(--cream); font-size: 13px; flex: 1; }
 
-    .vocal-assistant {
-      background: rgba(255,255,255,0.06);
-      color: rgba(244,241,236,0.85);
-      align-self: flex-start;
-      max-width: 90%;
-    }
+    .vocal-commands { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+    .vocal-cmd { padding: 3px 9px; background: rgba(200,148,58,0.1); border: 1px solid rgba(200,148,58,0.18); border-radius: 99px; font-size: 11px; color: var(--gold); }
 
-    .vocal-role {
-      display: block;
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--gold);
-      margin-bottom: 3px;
-    }
-
-    .vocal-assistant .vocal-role { color: rgba(244,241,236,0.4); }
+    #vocal-log { max-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+    .vocal-msg { padding: 7px 10px; border-radius: 8px; font-size: 12.5px; line-height: 1.5; }
+    .vocal-user { background: rgba(200,148,58,0.12); color: var(--cream); align-self: flex-end; max-width: 85%; }
+    .vocal-assistant { background: rgba(255,255,255,0.05); color: rgba(244,241,236,0.8); align-self: flex-start; max-width: 90%; }
+    .vocal-role { display: block; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gold); margin-bottom: 2px; }
+    .vocal-assistant .vocal-role { color: rgba(244,241,236,0.35); }
   </style>
 </head>
 <body>
@@ -169,34 +162,35 @@
       <a href="formation.html">Formation</a>
       <a href="quiz.html">Quiz</a>
     </div>
-    <button class="btn-urgence" onclick="callEmergency()">📞 Appeler le 15</button>
+    <button class="btn-urgence" onclick="callEmergency()">📞 15</button>
   </nav>
 
   <div class="page-container">
 
-    <!-- SELECTOR -->
+    <!-- MENU URGENCES -->
     <div id="view-selector">
       <div class="page-header">
         <a href="../index.html" class="back-btn">← Accueil</a>
         <h1 class="page-title">Secours</h1>
-        <p class="page-subtitle">Sélectionnez une situation. Je vous guide vocalement étape par étape.</p>
+        <p class="page-subtitle">Sélectionnez la situation. Je vous guide vocalement étape par étape.</p>
       </div>
-      <div class="emergency-grid">
-        <button class="emergency-btn e-rcp" onclick="startGuide('rcp')"><div class="e-icon">❤️</div><div class="e-info"><div class="e-title">Arrêt cardiaque</div><div class="e-sub">RCP · Massage cardiaque</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn" onclick="startGuide('etouffement')"><div class="e-icon">😮‍💨</div><div class="e-info"><div class="e-title">Étouffement</div><div class="e-sub">Manœuvre de Heimlich</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn" onclick="startGuide('avc')"><div class="e-icon">🧠</div><div class="e-info"><div class="e-title">AVC</div><div class="e-sub">Accident vasculaire cérébral</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn" onclick="startGuide('hemorragie')"><div class="e-icon">🩸</div><div class="e-info"><div class="e-title">Hémorragie</div><div class="e-sub">Compression · Garrot</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn" onclick="startGuide('pls')"><div class="e-icon">🤕</div><div class="e-info"><div class="e-title">Inconscient qui respire</div><div class="e-sub">Position Latérale de Sécurité</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn" onclick="startGuide('brulure')"><div class="e-icon">🔥</div><div class="e-info"><div class="e-title">Brûlure</div><div class="e-sub">Premiers soins brûlures</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn" onclick="startGuide('malaise')"><div class="e-icon">💊</div><div class="e-info"><div class="e-title">Malaise</div><div class="e-sub">Hypoglycémie · Syncope</div></div><div class="e-arrow">→</div></button>
-        <button class="emergency-btn" onclick="startGuide('noyade')"><div class="e-icon">🌊</div><div class="e-info"><div class="e-title">Noyade</div><div class="e-sub">Extraction · RCP aquatique</div></div><div class="e-arrow">→</div></button>
+      <div class="emergency-grid" id="emergency-grid"></div>
+    </div>
+
+    <!-- SÉLECTEUR VICTIME -->
+    <div id="view-victim">
+      <div class="victim-header">
+        <button class="back-btn" onclick="backToMenu()">← Retour</button>
+        <h1 class="page-title" id="victim-title"></h1>
+        <p class="victim-question" id="victim-subtitle">Qui est la victime ?</p>
       </div>
+      <div class="victim-btns" id="victim-btns"></div>
     </div>
 
     <!-- GUIDE ACTIF -->
     <div id="view-guide" style="display:none;">
       <div class="guide-header">
-        <button class="back-btn" onclick="stopGuide()">← Choisir une autre urgence</button>
+        <button class="back-btn" onclick="stopGuide()">← Choisir une autre situation</button>
         <div class="guide-title-row">
           <h1 class="page-title" id="guide-title">-</h1>
           <div class="guide-controls">
@@ -212,11 +206,20 @@
         </div>
       </div>
 
+      <!-- VIDEO -->
+      <div id="video-container">
+        <iframe id="video-iframe" allowfullscreen allow="autoplay"></iframe>
+        <div id="video-placeholder">
+          <div class="placeholder-icon">🎬</div>
+          <div class="placeholder-text">Vidéo à venir</div>
+        </div>
+      </div>
+
       <!-- BOUTON MODE VOCAL -->
       <div class="vocal-launch">
         <div class="vocal-launch-text">
           <strong>🎙 Mode vocal IA — mains libres</strong>
-          <span>Parlez à Vigio. Dites "suivant", "répète" ou posez une question.</span>
+          <span>Dites "suivant", "répète" ou posez une question</span>
         </div>
         <button id="btn-vocal-mode" onclick="toggleVocalMode()">🎙 Mode vocal IA</button>
       </div>
@@ -243,16 +246,16 @@
       <!-- METRONOME -->
       <div id="metronome-section" style="display:none;">
         <div class="metro-card">
-          <div class="metro-title">⏱ Métronome RCP — 100 bpm</div>
+          <div class="metro-title">⏱ Métronome — 100-120/min</div>
           <div class="metro-visual">
             <div class="metro-beat" id="metro-beat">💗</div>
-            <div class="metro-bpm">100 compressions / minute</div>
+            <div class="metro-bpm">100 à 120 compressions / minute</div>
           </div>
           <div class="metro-btns">
             <button class="btn-primary" onclick="startMetronome()" id="btn-metro-start">▶ Démarrer</button>
             <button class="btn-secondary" onclick="stopMetronome()" id="btn-metro-stop" style="display:none;">⏸ Pause</button>
           </div>
-          <div class="metro-tip">Comptez : 1, 2, 3… 30 compressions, puis 2 insufflations</div>
+          <div class="metro-tip">Comptez : 1, 2... 30 compressions → 2 insufflations (adulte) ou 15 → 2 (enfant/nourrisson)</div>
         </div>
       </div>
 
