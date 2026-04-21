@@ -45,10 +45,10 @@ const PROTOCOLS = {
     showMetronome: false, showTimer: true,
     steps: [
       { text: "Protégez-vous", detail: "Gants ou sac plastique si disponibles.", voice: "Si vous avez des gants, mettez-les. Sinon, utilisez un sac plastique pour vous protéger." },
-      { text: "Allongez la victime", detail: "Surélevez la zone blessée si possible.", voice: "Allongez la victime. Si possible, surélevez la zone qui saigne." },
-      { text: "Compression directe", detail: "Appuyez FORT sans relâcher.", voice: "Appuyez très fort sur la plaie avec un tissu propre ou vos mains. Maintenez la pression sans jamais relâcher." },
+      { text: "Allongez et couvrez la victime", detail: "Allongez + couvrez (veste, couverture) pour éviter l'hypothermie — triade de la mort.", voice: "Allongez la victime et couvrez-la immédiatement avec une veste ou une couverture pour éviter l'hypothermie." },
+      { text: "Compression directe", detail: "Appuyez FORT sans relâcher. Tissu imbibé → ajoutez par-dessus sans enlever.", voice: "Appuyez très fort sur la plaie avec un tissu propre. Maintenez sans jamais relâcher. Si le tissu est imbibé, ajoutez une couche par-dessus." },
       { text: "Appelez le 15", detail: "Décrivez le saignement.", voice: "Appelez le 15. Décrivez l'abondance du saignement et l'origine de la blessure." },
-      { text: "Garrot si membre incontrôlable", detail: "5-7 cm au-dessus. Notez l'heure. Ne desserrez JAMAIS.", voice: "Si le saignement est incontrôlable sur un membre, posez un garrot au-dessus de la plaie. Notez l'heure de pose. Ne le desserrez jamais." },
+      { text: "Garrot en dernier recours", detail: "Uniquement si compression vraiment impossible. 5 cm au-dessus. Notez l'heure. Ne desserrez JAMAIS.", voice: "Le garrot est un dernier recours seulement si la compression est vraiment impossible. Serrez fort cinq centimètres au-dessus. Notez l'heure. Ne le desserrez jamais." },
     ],
   },
   pls: {
@@ -80,9 +80,9 @@ const PROTOCOLS = {
     showMetronome: false, showTimer: false,
     steps: [
       { text: "Évaluez la situation", detail: "Consciente ? Diabétique ?", voice: "Évaluez la situation. La personne est-elle consciente ? Est-elle diabétique ?" },
-      { text: "Installez confortablement", detail: "Assise ou allongée. Desserrez les vêtements.", voice: "Installez la personne confortablement, assise ou allongée. Desserrez les vêtements serrés et aérez la pièce." },
-      { text: "Si diabétique : donnez du sucre", detail: "Jus, boisson sucrée. Attendez 15 min.", voice: "Si elle est diabétique et consciente, donnez du sucre, un jus de fruit ou une boisson sucrée. Attendez quinze minutes." },
-      { text: "Appelez le 15 si nécessaire", detail: "Douleur thoracique, perte de connaissance, absence d'amélioration.", voice: "Appelez le 15 si : douleur dans la poitrine, perte de connaissance, ou absence d'amélioration après quinze minutes." },
+      { text: "Stimulez et installez", detail: "Appelez la personne. Installez sans surélever les jambes. Desserrez les vêtements.", voice: "Appelez la personne, stimulez doucement. Installez-la confortablement sans surélever les jambes. Desserrez les vêtements serrés." },
+      { text: "Vérifiez si diabétique", detail: "Cherchez insuline ou sucre près d'elle. Si oui, donnez du sucre.", voice: "Vérifiez si elle est diabétique. Cherchez de l'insuline ou du sucre près d'elle. Si oui, donnez-lui du sucre ou un jus de fruit." },
+      { text: "Appelez le 15 si nécessaire", detail: "Douleur thoracique, perte de connaissance, absence d'amélioration.", voice: "Appelez le 15 si : douleur thoracique, perte de connaissance, ou absence d'amélioration. Ne surélevez jamais les jambes." },
     ],
   },
   noyade: {
